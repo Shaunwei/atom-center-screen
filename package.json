@@ -2,7 +2,7 @@
   "name": "simple-center-screen",
   "main": "./lib/simple-center-screen",
   "author": "Shaun Wei <shaunweix@gmail.com>",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Center cursor of screen",
   "activationCommands": {
     "atom-workspace": "simple-center-screen:toggle"
@@ -12,6 +12,5 @@
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
