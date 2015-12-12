@@ -1,0 +1,22 @@
+# See https://atom.io/docs/latest/hacking-atom-package-word-count#menus for more details
+'context-menu':
+  'atom-text-editor': [
+    {
+      'label': 'Toggle simple-center-screen'
+      'command': 'simple-center-screen:toggle'
+    }
+  ]
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'simple-center-screen'
+      'submenu': [
+        {
+          'label': 'Toggle'
+          'command': 'simple-center-screen:toggle'
+        }
+      ]
+    ]
+  }
+]
