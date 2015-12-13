@@ -3,8 +3,6 @@ module.exports =
   editorElement: null
 
   activate: () ->
-    @editor = atom.workspace.getActiveTextEditor()
-    @editorElement = atom.views.getView(@editor)
     atom.commands.add 'atom-workspace', 'simple-center-screen:toggle': =>
       @centerScreen()
 
@@ -12,13 +10,19 @@ module.exports =
     @getVisibleTop() is 0
 
   isBottom: ->
-    @getVisibleBottom() is @editor.getScreenLineCount()
+    @getVisibleBottom() is @getEditor().getScreenLineCount()
+
+  getEditor: ->
+    atom.workspace.getActiveTextEditor()
+
+  getEditorElement: ->
+    atom.views.getView(@getEditor())
 
   getVisibleTop: ->
-    @editorElement.getFirstVisibleScreenRow()
+    @getEditorElement().getFirstVisibleScreenRow()
 
   getVisibleBottom: ->
-    @editorElement.getLastVisibleScreenRow()
+    @getEditorElement().getLastVisibleScreenRow()
 
   getVisibleHeight: ->
      @getVisibleBottom() - @getVisibleTop() + 1
@@ -27,19 +31,19 @@ module.exports =
     parseInt (@getVisibleBottom() + @getVisibleTop()) / 2
 
   getFinalTop: ->
-    @editor.getCursorScreenPosition().row - parseInt(@getVisibleHeight() / 2)
+    @getEditor().getCursorScreenPosition().row - parseInt(@getVisibleHeight() / 2)
 
   getFinalBottom: ->
     @getFinalTop() + @getVisibleHeight()
 
   centerScreen: ->
-    cursorPosition = @editor.getCursorScreenPosition()
+    cursorPosition = @getEditor().getCursorScreenPosition()
     diff = @getVisibleMidRow() - cursorPosition.row
     # default by atom
     scrolloff = 3
     if diff > 1
       if not @isTop()
-        @editor.scrollToScreenPosition([@getFinalTop() + scrolloff, 0])
+        @getEditor().scrollToScreenPosition([@getFinalTop() + scrolloff, 0])
     else if diff < -1
       if not @isBottom()
-        @editor.scrollToScreenPosition([@getFinalBottom() - scrolloff, 0])
+        @getEditor().scrollToScreenPosition([@getFinalBottom() - scrolloff, 0])
